@@ -27,8 +27,11 @@ class AccountInline(admin.TabularInline):
     extra = 0
 
 class PersonAdmin(admin.ModelAdmin):
-    list_display = ('first_name', 'last_name')
+    list_display = ('first_name', 'last_name', 'get_groups')
     inlines = [AddressInline, EmailInline, PhoneInline, AccountInline, InfoInline, MemberInline]
+    
+    def get_groups(self, obj):
+        return "\n".join([grp.name for grp in obj.groups.all()])
 
 #class MemberAdmin(admin.ModelAdmin):
 #    filter_horizontal = ('groups',)
